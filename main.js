@@ -54,11 +54,14 @@ d3.csv("all.csv?t=" + new Date, function dottype(d) {
 
     nodesById[d.id] = d;
 
-    var year = parseInt(d.birth.match(/^(\d+)/)[1], 10);
-    d.birth_year = year;
+    d.birth_year = parseInt(d.birth.match(/^(\d+)/)[1], 10);
+
+    if (d.to_date) {
+        d.to_date_year = parseInt(d.to_date.match(/^(\d+)/)[1], 10);
+    }
 
     if (d.to) {
-        nodesById[d.to].love = d;
+        nodesById[d.to]._love = d;
 
         return null;
     }
@@ -98,6 +101,7 @@ function pos(d) {
 
 
 function prepareNodes(nodes, year) {
+    var count = 0;
     var root = nodes[0];
 
     var maxLevel = 1;
@@ -117,6 +121,14 @@ function prepareNodes(nodes, year) {
 
         if (node.level > maxLevel) {
             maxLevel = node.level;
+        }
+
+        count++;
+        if (node._love && node._love.to_date_year <= year) {
+            count++;
+            node.love = node._love;
+        } else {
+            delete node.love;
         }
     });
 
@@ -139,14 +151,20 @@ function prepareNodes(nodes, year) {
         }
     });
 
-    return root;
+    return {
+        root: root,
+        count: count
+    };
 }
 
 function render(nodes, year) {
     // console.log('render', nodes, year);
 
-    var root = prepareNodes(nodes, year);
-    $year.text(year);
+    var meta = prepareNodes(nodes, year),
+        root = meta.root,
+        count = meta.count;
+
+    $year.text(year + ' (' + count + ')');
 
     var _nodes = tree.nodes(root),
         links = tree.links(_nodes);
