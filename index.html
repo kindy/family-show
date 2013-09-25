@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.year {
+    position: absolute; left: 10px; top: 10px; border: 1px solid #aaa; border-radius: 3px;
+    background: white; padding: 2px 6px;
+}
+
+circle {
+  stroke: #fff;
+}
+
+.photo {
+    border-radius: 4px;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #aaa;
+  stroke-width: 2px;
+}
+
+
+.axis {
+  font: 10px sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.axis .domain {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .3;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+
+.axis .halo {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+
+.slider .handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: .5;
+  stroke-width: 1.25px;
+  pointer-events: none;
+}
+
+</style>
+<body>
+<script src="d3.v3.min.js"></script>
+<script src="main.js"></script>
